@@ -1,1 +1,1 @@
-
+# GitHub Actions workflow that runs pytest on every git push.
