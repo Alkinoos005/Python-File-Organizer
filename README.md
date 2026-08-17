@@ -15,3 +15,6 @@ A lightweight Python command-line utility to automatically clean up messy direct
 Organize the current working directory:
 ```bash
 python organizer.py
+
+```
+The testing has failed  I will fix it later
