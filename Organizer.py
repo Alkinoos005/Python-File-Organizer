@@ -54,3 +54,37 @@ class FileOrganizer:
             destination_dir = self.target_dir / category
             destination_path = destination_dir / item.name
 
+            if dry_run:
+                logging.info(f"[DRY-RUN] Would move: {item.name} -> {category}/")
+            else:
+                destination_dir.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(item), str(destination_path))
+                logging.info(f"Moved: {item.name} -> {category}/")
+            
+            moved_count += 1
+
+        logging.info(f"Finished! Total files processed: {moved_count}")
+        return moved_count
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Organize files in a directory by file extension.")
+    parser.add_argument(
+        "path",
+        nargs="?",
+        default=".",
+        help="Path to the directory to organize (default: current directory)"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview changes without moving files"
+    )
+
+    args = parser.parse_args()
+    organizer = FileOrganizer(Path(args.path))
+    organizer.organize(dry_run=args.dry_run)
+
+
+if __name__ == "__main__":
+    main()
